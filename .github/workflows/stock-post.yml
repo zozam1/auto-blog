@@ -1,0 +1,16 @@
+name: Stock Blog Post
+
+on:
+  schedule:
+    - cron: '0 2 * * *'   # 한국 오전 11시
+    - cron: '0 15 * * *'  # 한국 자정
+  workflow_dispatch:
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Post Stock to Blogger
+        run: |
+          curl -s -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" \
+          https://auto-blog-tawny-theta.vercel.app/api/stock
