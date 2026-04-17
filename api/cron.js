@@ -70,8 +70,24 @@ function getWritingStyle() {
   return styles[Math.floor(Math.random() * styles.length)];
 }
 
+async function fetchImage(keyword) {
+  const query = keyword.replace(/[^a-zA-Z ]/g, '').split(' ').slice(0, 3).join(' ');
+  const response = await fetch(`https://api.pexels.com/v1/search?query=${encodeURIComponent(query)}&per_page=5&orientation=landscape`, {
+    headers: { Authorization: process.env.PEXELS_API_KEY }
+  });
+  const data = await response.json();
+  if (!data.photos || data.photos.length === 0) return null;
+  const photo = data.photos[Math.floor(Math.random() * data.photos.length)];
+  return {
+    url: photo.src.large,
+    photographer: photo.photographer,
+    photographerUrl: photo.photographer_url
+  };
+}
+
 async function generateBlogPost(keyword) {
   const style = getWritingStyle();
+  const image = await fetchImage(keyword);
 
   const response = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
@@ -115,7 +131,18 @@ Respond ONLY with this exact JSON structure:
 
   const data = await response.json();
   const raw = data.content[0].text.replace(/```json|```/g, '').trim();
-  return JSON.parse(raw);
+  const post = JSON.parse(raw);
+
+  if (image) {
+    const imageHtml = `<div style="margin-bottom:24px;border-radius:12px;overflow:hidden;">
+<img src="${image.url}" alt="${keyword}" style="width:100%;height:auto;display:block;" />
+<p style="font-size:0.72rem;color:#9ca3af;margin:6px 0 0;text-align:right;">
+Photo by <a href="${image.photographerUrl}" target="_blank" rel="noopener" style="color:#9ca3af;">${image.photographer}</a> on <a href="https://www.pexels.com" target="_blank" rel="noopener" style="color:#9ca3af;">Pexels</a>
+</p></div>`;
+    post.content = imageHtml + post.content;
+  }
+
+  return post;
 }
 
 async function getAccessToken() {
