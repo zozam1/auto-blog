@@ -72,28 +72,28 @@ function getStockKeyword() {
 function getWritingStyle() {
   const styles = [
     {
-      voice: "a personal finance enthusiast who learned investing the hard way — through real mistakes and wins",
-      tone: "casual and honest, like writing a personal journal entry you're sharing with friends",
-      structure: "start with a personal story or moment of confusion about this topic, then naturally explain it, end with your honest take",
-      avoid: "bullet point lists, numbered tips, FAQ sections, headers like 'Introduction' or 'Conclusion', phrases like 'In this article' or 'Today we will'"
+      voice: "a fun, relatable 20-something who's figuring out investing and loves sharing what they learn with friends",
+      tone: "bubbly and warm, like texting your bestie about money stuff — enthusiastic but real. Use 1-2 emojis naturally in the post (not forced, not every sentence)",
+      structure: "open with a relatable moment or feeling ('okay so I was literally today years old when I learned...'), explain it in a fun way, end with an encouraging note",
+      avoid: "stiff language, numbered tips, FAQ sections, boring intros like 'In this article', corporate-speak"
     },
     {
-      voice: "a skeptical but curious everyday investor who questions common financial advice",
-      tone: "direct and slightly opinionated, occasionally sarcastic but always helpful",
-      structure: "open with a myth or misconception people have, then dig into the reality, share a specific example, give a practical thought to leave with",
-      avoid: "overly formal language, excessive headers, generic tips, phrases like 'it is important to note' or 'it is worth mentioning'"
+      voice: "a witty personal finance writer who makes money topics feel less scary and actually fun",
+      tone: "playful and a little cheeky, like a friend who happens to know a lot about money. Toss in 1-2 emojis where they feel natural",
+      structure: "hook with something surprising or funny about this topic, break it down without being boring, leave them with one thing they'll actually remember",
+      avoid: "dry explanations, excessive headers, generic tips, phrases like 'it is important to note', being preachy"
     },
     {
-      voice: "a former finance student who now writes for regular people, not Wall Street types",
-      tone: "conversational with occasional dry humor, explains jargon without being condescending",
-      structure: "pick one specific angle of this topic (not the whole thing), go deep on that angle, use a concrete analogy or real-world comparison",
-      avoid: "covering everything about the topic, bullet lists, formulaic structure, words like 'comprehensive' or 'ultimate guide'"
+      voice: "a cheerful finance nerd who gets genuinely excited about money topics and wants everyone else to too",
+      tone: "enthusiastic and encouraging, like a hype person for your financial life. Use 1-2 relevant emojis naturally",
+      structure: "start with why this topic is actually cooler than it sounds, share something interesting you know about it, end with a practical takeaway that feels doable",
+      avoid: "making it sound complicated, bullet lists, robotic transitions, words like 'comprehensive' or 'crucial', sounding like a textbook"
     },
     {
-      voice: "someone who has been investing for 10+ years and is sharing lessons from experience",
-      tone: "warm and candid, occasionally admits uncertainty or past mistakes",
-      structure: "lead with something surprising or counterintuitive you learned, then explain the reasoning behind it, give context for when it applies",
-      avoid: "generic advice, excessive subheadings, robotic transitions like 'Furthermore' or 'In addition', list-heavy formatting"
+      voice: "a chill but knowledgeable friend who gives you the real talk about finance without making you feel dumb",
+      tone: "casual and honest, occasionally self-deprecating, always warm. Sprinkle in 1-2 emojis where it fits",
+      structure: "start with the real talk version of this topic (skip the fluff), share what actually matters, end with your honest opinion on it",
+      avoid: "condescending explanations, excessive subheadings, formal transitions, FAQ sections, sounding like a financial advisor"
     }
   ];
   return styles[Math.floor(Math.random() * styles.length)];

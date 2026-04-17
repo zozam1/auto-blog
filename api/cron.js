@@ -43,28 +43,28 @@ async function getTrendingKeyword() {
 function getWritingStyle() {
   const styles = [
     {
-      voice: "a curious person who just went down a rabbit hole about this topic and is sharing what they found",
-      tone: "genuine and exploratory — you're figuring things out as you write, not lecturing",
-      structure: "open with what made you look this up, share 2-3 things you found genuinely interesting or surprising, close with your current thinking on it",
-      avoid: "expert-sounding authority, comprehensive coverage, FAQ sections, bullet point lists, headers every other paragraph"
+      voice: "a curious and bubbly person who just went down a rabbit hole about this financial topic and can't wait to share it",
+      tone: "excited and genuine, like spilling tea to a friend about something wild you just learned. Use 1-2 emojis naturally",
+      structure: "open with what sparked your curiosity ('okay so I fell into a rabbit hole last night...'), share the most interesting thing you found, close with your honest reaction",
+      avoid: "expert-sounding authority, comprehensive coverage, FAQ sections, bullet point lists, boring intros"
     },
     {
-      voice: "an opinionated generalist writer who covers whatever catches their eye",
-      tone: "confident with a clear point of view, slightly edgy but grounded in actual information",
-      structure: "take one specific angle or unpopular opinion about this topic, back it up with reasoning and real examples, acknowledge the other side briefly",
-      avoid: "fence-sitting, wishy-washy language, excessive balance, 'on one hand... on the other hand' paralysis, numbered tips"
+      voice: "a fun finance writer with strong opinions and a great sense of humor about money",
+      tone: "witty and confident, a little cheeky but always backed by real info. Toss in 1-2 emojis where they feel natural",
+      structure: "open with a spicy take or surprising angle on this topic, back it up with what you actually know, leave them with something worth thinking about",
+      avoid: "fence-sitting, dry explanations, numbered tips, robotic transitions, sounding like a Wikipedia article"
     },
     {
-      voice: "a journalist who writes human-interest stories about everyday topics",
-      tone: "narrative-driven and story-focused, puts real human context around facts",
-      structure: "open with a scene or scenario that makes this topic real, bring in the facts through the story, land on something that sticks",
-      avoid: "clinical explanations, abstract statistics without context, listicles, formal headers, phrases like 'it is important to'"
+      voice: "a warm and encouraging finance friend who wants to make money stuff feel less intimidating",
+      tone: "cheerful and supportive, like a hype person for your financial future. Sprinkle in 1-2 relevant emojis",
+      structure: "start by acknowledging that this topic sounds scarier than it is, make it feel approachable with a real example, end with something encouraging",
+      avoid: "making it sound complicated, bullet lists, formal headers, corporate jargon, condescending explanations"
     },
     {
-      voice: "a Reddit-style commenter who writes longer posts — knowledgeable but relatable",
-      tone: "casual and direct, occasionally self-deprecating, acknowledges what you don't know",
-      structure: "get to the point fast, explain your reasoning in a natural order, include at least one 'by the way' type aside",
-      avoid: "formal language, generic insight, conclusion paragraphs that summarize what you just said, 'In this post I will'"
+      voice: "a chill and relatable person giving real talk about finance, no fluff",
+      tone: "casual and direct, occasionally funny, always honest. Use 1-2 emojis naturally in the flow",
+      structure: "get right to the interesting part, share what actually matters about this topic, end with your real take on it",
+      avoid: "long boring intros, excessive subheadings, formal transitions, FAQ sections, summarizing what you just said"
     }
   ];
   return styles[Math.floor(Math.random() * styles.length)];
