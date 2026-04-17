@@ -69,31 +69,87 @@ function getStockKeyword() {
   return keywords[Math.floor(Math.random() * keywords.length)];
 }
 
+function getWritingStyle() {
+  const styles = [
+    {
+      voice: "a personal finance enthusiast who learned investing the hard way — through real mistakes and wins",
+      tone: "casual and honest, like writing a personal journal entry you're sharing with friends",
+      structure: "start with a personal story or moment of confusion about this topic, then naturally explain it, end with your honest take",
+      avoid: "bullet point lists, numbered tips, FAQ sections, headers like 'Introduction' or 'Conclusion', phrases like 'In this article' or 'Today we will'"
+    },
+    {
+      voice: "a skeptical but curious everyday investor who questions common financial advice",
+      tone: "direct and slightly opinionated, occasionally sarcastic but always helpful",
+      structure: "open with a myth or misconception people have, then dig into the reality, share a specific example, give a practical thought to leave with",
+      avoid: "overly formal language, excessive headers, generic tips, phrases like 'it is important to note' or 'it is worth mentioning'"
+    },
+    {
+      voice: "a former finance student who now writes for regular people, not Wall Street types",
+      tone: "conversational with occasional dry humor, explains jargon without being condescending",
+      structure: "pick one specific angle of this topic (not the whole thing), go deep on that angle, use a concrete analogy or real-world comparison",
+      avoid: "covering everything about the topic, bullet lists, formulaic structure, words like 'comprehensive' or 'ultimate guide'"
+    },
+    {
+      voice: "someone who has been investing for 10+ years and is sharing lessons from experience",
+      tone: "warm and candid, occasionally admits uncertainty or past mistakes",
+      structure: "lead with something surprising or counterintuitive you learned, then explain the reasoning behind it, give context for when it applies",
+      avoid: "generic advice, excessive subheadings, robotic transitions like 'Furthermore' or 'In addition', list-heavy formatting"
+    }
+  ];
+  return styles[Math.floor(Math.random() * styles.length)];
+}
+
 async function generateBlogPost(keyword) {
+  const style = getWritingStyle();
+
   const response = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'x-api-key': process.env.ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01' },
-    body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 2000, messages: [{ role: 'user', content: `Write a short, engaging, and easy-to-understand English blog post about: "${keyword}".
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': process.env.ANTHROPIC_API_KEY,
+      'anthropic-version': '2023-06-01'
+    },
+    body: JSON.stringify({
+      model: 'claude-opus-4-5',
+      max_tokens: 2000,
+      system: `You are ${style.voice}. You write blog posts about personal finance and investing for a general audience.
 
-Requirements:
-- Title: clear and beginner-friendly
-- Length: 400-600 words (short and snappy)
-- Style: simple language, like explaining to a friend
-- Include: 1-2 practical tips or key takeaways
-- Format as clean HTML using <p>, <h2>, <ul>, <li>, <strong> tags
-- Add a fun fact or surprising statistic if relevant
+Your writing style: ${style.tone}
+Structure approach: ${style.structure}
+What to avoid: ${style.avoid}
 
-Respond ONLY with valid JSON (no markdown): {"title": "...", "content": "full HTML content", "labels": ["Finance", "Investing", "Stock Market"]}` }] }),
+Write like a real person, not an AI assistant. Vary your sentence lengths — mix short punchy sentences with longer explanatory ones. Use contractions naturally (it's, don't, you'll, I've). Include a specific number, statistic, or real-world reference where it fits naturally. Express an actual opinion somewhere in the piece.
+
+Output ONLY raw JSON. No markdown. No code blocks.`,
+      messages: [{
+        role: 'user',
+        content: `Write a blog post about: "${keyword}"
+
+Length: 450-650 words
+Format: clean HTML using only <p>, <h2>, <strong>, <em> tags — minimal heading usage, mostly flowing paragraphs
+Title: natural and specific (not clickbait, not generic — something a real person would write)
+
+Respond ONLY with this exact JSON structure:
+{"title": "...", "content": "full HTML content here", "labels": ["Finance", "Investing"]}`
+      }]
+    }),
   });
+
   const data = await response.json();
-  return JSON.parse(data.content[0].text.replace(/```json|```/g, '').trim());
+  const raw = data.content[0].text.replace(/```json|```/g, '').trim();
+  return JSON.parse(raw);
 }
 
 async function getAccessToken() {
   const response = await fetch('https://oauth2.googleapis.com/token', {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: new URLSearchParams({ client_id: process.env.GOOGLE_CLIENT_ID, client_secret: process.env.GOOGLE_CLIENT_SECRET, refresh_token: process.env.GOOGLE_REFRESH_TOKEN, grant_type: 'refresh_token' }),
+    body: new URLSearchParams({
+      client_id: process.env.GOOGLE_CLIENT_ID,
+      client_secret: process.env.GOOGLE_CLIENT_SECRET,
+      refresh_token: process.env.GOOGLE_REFRESH_TOKEN,
+      grant_type: 'refresh_token'
+    }),
   });
   const data = await response.json();
   if (!data.access_token) throw new Error('Failed to get access token');
