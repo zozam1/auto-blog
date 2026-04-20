@@ -110,9 +110,11 @@ Critical rules for sounding human:
 - Use contractions: it's, don't, you'll, they're, I'd, can't
 - It's okay to start a sentence with "And" or "But" occasionally
 - Express a real opinion or reaction, not just information
-- Reference something specific — a real event, a real number, a real name where it fits
-- Do NOT use the word "delve", "crucial", "comprehensive", "it's worth noting", "game-changer", "in conclusion", "to summarize"
-- Do NOT start with "In today's..." or "Have you ever wondered..."
+- Include at least ONE specific real number, date, or named person/company in the article
+- Do NOT use: "delve", "crucial", "comprehensive", "it's worth noting", "game-changer", "in conclusion", "to summarize", "navigating", "landscape", "testament", "underscore", "newfound", "robust", "leverage", "utilize", "foster", "facilitate", "let's dive", "buckle up", "look no further", "the bottom line", "at the end of the day", "ever-evolving", "fast-paced"
+- Do NOT start with "In today's...", "Have you ever wondered...", "Whether you're...", "If you've been..."
+- Do NOT end paragraphs with a one-sentence moral-of-the-story summary
+- Do NOT use rhetorical questions back-to-back
 
 Output ONLY raw JSON. No markdown. No code blocks.`,
       messages: [{
